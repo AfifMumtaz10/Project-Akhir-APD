@@ -1,0 +1,99 @@
+{
+    "jadwal_vaksin": {
+        "Covid-19": {
+            "maks": 3,
+            "interval": 28
+        },
+        "Tetanus": {
+            "maks": 3,
+            "interval": 30
+        },
+        "Hepatitis B": {
+            "maks": 3,
+            "interval": 30
+        },
+        "Influenza": {
+            "maks": 1,
+            "interval": 0
+        }
+    },
+    "data_user": {
+        "rendy": {
+            "password": "rendy123",
+            "role": "admin",
+            "nama": "Rendy",
+            "umur": 20
+        },
+        "afif": {
+            "password": "afif123",
+            "role": "user",
+            "nama": "Muhammad Afif Mumtaz",
+            "umur": 19
+        },
+        "abbie": {
+            "password": "abbie123",
+            "role": "user",
+            "nama": "Abbie Mujahiddin Asmuransyah",
+            "umur": 19
+        },
+        "salwa": {
+            "password": "salwa123",
+            "role": "user",
+            "nama": "Salwa Salsabila",
+            "umur": 19
+        },
+        "cecil": {
+            "password": "cecil123",
+            "role": "user",
+            "nama": "Cecilia Marsya Pua",
+            "umur": 19
+        }
+    },
+    "data_vaksin": {
+        "1": {
+            "akun": "abbie",
+            "nama": "Abbie Mujahiddin Asmuransyah",
+            "umur": 19,
+            "vaksin": "Covid-19",
+            "dosis": 1,
+            "status": "Sudah Vaksin",
+            "tanggal": "2026-10-10"
+        },
+        "2": {
+            "akun": "abbie",
+            "nama": "Abbie Mujahiddin Asmuransyah",
+            "umur": 19,
+            "vaksin": "Hepatitis B",
+            "dosis": 1,
+            "status": "Sudah Vaksin",
+            "tanggal": "2026-10-25"
+        },
+        "3": {
+            "akun": "afif",
+            "nama": "Muhammad Afif Mumtaz",
+            "umur": 19,
+            "vaksin": "Hepatitis B",
+            "dosis": 2,
+            "status": "Sudah Vaksin",
+            "tanggal": "2026-10-15"
+        },
+        "4": {
+            "akun": "salwa",
+            "nama": "Salwa Salsabila",
+            "umur": 19,
+            "vaksin": "Influenza",
+            "dosis": 1,
+            "status": "Ditunda",
+            "tanggal": "2026-10-20"
+        },
+        "5": {
+            "akun": "cecil",
+            "nama": "Cecilia Marsya Pua",
+            "umur": 19,
+            "vaksin": "Tetanus",
+            "dosis": 1,
+            "status": "Belum Vaksin",
+            "tanggal": "2026-10-28"
+        }
+    }
+}
