@@ -19,7 +19,6 @@ from tampilan import (
 # Mengimpor fitur untuk menyimpan perubahan data.
 from penyimpanan import simpan_data
 
-
 # Untuk menambahkan data vaksinasi baru.
 def proses_tambah():
     print("TAMBAH DATA VAKSINASI")

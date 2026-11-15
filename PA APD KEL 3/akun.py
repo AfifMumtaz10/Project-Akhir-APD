@@ -13,7 +13,6 @@ from tampilan import buat_tabel, jeda, konfirmasi
 # Mengambil fitur untuk menyimpan data.
 from penyimpanan import simpan_data
 
-
 # Untuk menghentikan program yang sedang berjalan.
 def keluar_program():
     sesi["program_berjalan"] = False

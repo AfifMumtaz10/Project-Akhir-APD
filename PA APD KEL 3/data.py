@@ -11,7 +11,6 @@ VAKSIN_MAKS = 30
 DOSIS_VAKSIN_MAKS = 5
 INTERVAL_MAKS = 365
 
-
 # Menyimpan pilihan status vaksinasi yang tersedia.
 daftar_status = ["Sudah Vaksin", "Belum Vaksin", "Ditunda"]
 
