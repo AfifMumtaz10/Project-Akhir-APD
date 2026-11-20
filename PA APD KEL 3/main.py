@@ -33,3 +33,6 @@ def main():
 # Memastikan fungsi main hanya berjalan saat file ini dijalankan langsung, bukan saat diimpor.
 if __name__ == "__main__":
     main()
+
+
+#komen abbie
