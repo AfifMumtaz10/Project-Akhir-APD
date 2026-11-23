@@ -1,45 +1,68 @@
-# Mengimpor os untuk membersihkan layar terminal.
+# Mengimpor os untuk membantu membersihkan tampilan terminal.
 import os
-# Mengimpor questionary untuk menampilkan pilihan menu yang bisa dipilih dengan panah keyboard.
+
+# Mengimpor questionary untuk membuat pilihan menu interaktif.
 import questionary
-# Mengimpor PrettyTable untuk menampilkan data dalam bentuk tabel yang rapi.
+
+# Mengimpor PrettyTable untuk menampilkan data dalam bentuk tabel.
 from prettytable import PrettyTable
-# Mengambil jadwal dan daftar vaksin untuk ditampilkan di tabel.
+
+# Mengambil informasi jadwal dan daftar jenis vaksin.
 from data import jadwal_vaksin, daftar_vaksin
-# Mengambil fungsi format_tanggal untuk menampilkan tanggal dalam format DD-MM-YYYY.
+
+# Mengambil fungsi untuk mengubah tanggal menjadi format yang mudah dibaca.
 from validasi import format_tanggal
-# Mengambil fungsi-fungsi logika untuk memeriksa admin, menghitung jadwal, dan menentukan dosis.
+
+# Mengambil fungsi untuk memeriksa peran akun, menghitung jadwal,
+# menentukan dosis terakhir, dan memberikan informasi dosis vaksin.
 from logika import (
     adalah_admin, hitung_jadwal, dosis_terakhir,
-    keterangan_dosis, dosis_tercatat, saran_dosis
+    keterangan_dosis, dosis_tercatat, saran_dosis, alasan_saran
 )
 
-# Mengatur warna dan gaya tampilan untuk menu pilihan, yaitu warna cyan dan huruf tebal.
+
+# Mengatur warna tulisan dan penanda pada pilihan menu.
 GAYA_PILIHAN = questionary.Style([
     ("pointer", "fg:#00ffff bold"),
     ("highlighted", "fg:#00ffff bold"),
     ("answer", "fg:#00ffff bold"),
 ])
 
-# Membersihkan layar terminal agar tampilan menu selalu terlihat baru.
+
+# Membersihkan tampilan terminal agar layar lebih rapi.
 def clear():
     os.system("cls" if os.name == "nt" else "clear")
 
-# Menahan tampilan sejenak sampai pengguna menekan Enter.
+
+# Memberi jeda agar pengguna bisa membaca informasi sebelum melanjutkan.
 def jeda(pesan="Tekan Enter untuk melanjutkan..."):
     try:
         input(pesan)
     except EOFError:
         pass
 
-# Menampilkan judul menu yang diapit garis sama dengan agar terlihat jelas.
+
+# Menampilkan judul beserta informasi tambahan setelah membersihkan layar.
+def layar_baru(judul, ringkasan=()):
+    clear()
+    print(judul)
+
+    for baris in ringkasan:
+        print(baris)
+
+    if ringkasan:
+        print()
+
+
+# Menampilkan judul dengan garis pembatas agar terlihat lebih jelas.
 def tampilkan_judul(teks):
     garis = "=" * (len(teks) + 10)
     print(garis)
     print(teks.center(len(garis)))
     print(garis)
 
-# Membuat dan menampilkan tabel berdasarkan judul, nama kolom, dan isi baris yang diberikan.
+
+# Menyusun dan menampilkan data dalam tabel berdasarkan judul, kolom, dan isinya.
 def buat_tabel(judul, kolom, baris):
     tabel = PrettyTable()
     tabel.title = judul
@@ -51,7 +74,8 @@ def buat_tabel(judul, kolom, baris):
 
     print(tabel)
 
-# Menampilkan daftar jenis vaksin beserta jumlah dosis dan jarak antar dosisnya.
+
+# Menampilkan daftar vaksin beserta jumlah dosis dan jarak antar dosisnya.
 def tampilkan_daftar_vaksin():
     baris = []
 
@@ -66,7 +90,9 @@ def tampilkan_daftar_vaksin():
         baris
     )
 
-# Menampilkan penjelasan tiap dosis untuk satu jenis vaksin, beserta statusnya sudah tercatat atau disarankan.
+
+# Menjelaskan tahapan dosis vaksin, mencatat dosis yang sudah diterima,
+# serta memberikan saran dosis berikutnya berdasarkan riwayat vaksinasi.
 def tampilkan_penjelasan_dosis(vaksin, nama, kecuali_id=None):
     maks = jadwal_vaksin[vaksin]["maks"]
     tercatat = dosis_tercatat(nama, vaksin, kecuali_id)
@@ -94,7 +120,14 @@ def tampilkan_penjelasan_dosis(vaksin, nama, kecuali_id=None):
     else:
         print(f"Saran: Dosis {saran} untuk vaksin {vaksin}.")
 
-# Menampilkan data vaksinasi dalam bentuk tabel, dengan kolom yang berbeda antara admin dan pengguna biasa.
+    print("Dasar saran:")
+
+    for alasan in alasan_saran(nama, vaksin, kecuali_id):
+        print(f"- {alasan}")
+
+
+# Menampilkan data vaksinasi dalam tabel dengan kolom yang disesuaikan
+# berdasarkan peran akun yang sedang login.
 def tampilkan_tabel_vaksin(judul, data):
     if adalah_admin():
         kolom = [
@@ -120,7 +153,9 @@ def tampilkan_tabel_vaksin(judul, data):
 
     buat_tabel(judul, kolom, baris)
 
-# Menampilkan jadwal dosis berikutnya berdasarkan dosis terakhir yang sudah tercatat.
+
+# Menampilkan jadwal vaksinasi setiap orang berdasarkan dosis terakhir
+# yang tercatat, termasuk jadwal lanjutan dan status waktunya.
 def tampilkan_tabel_jadwal(data):
     kolom = [
         "Nama", "Jenis Vaksin", "Dosis Terakhir", "Tanggal Terakhir",
@@ -139,14 +174,15 @@ def tampilkan_tabel_jadwal(data):
 
     buat_tabel("JADWAL DOSIS BERIKUTNYA", kolom, baris)
 
-# Menampilkan pertanyaan pilihan dengan daftar pilihan yang bisa dipilih menggunakan panah keyboard.
+
+# Menampilkan pilihan interaktif dan mengembalikan nilai dari pilihan pengguna.
+# Jika terjadi ValueError, pilihan ditampilkan kembali tanpa pilihan awal.
 def pilih_opsi(pertanyaan, daftar_pilihan, default=None):
     pilihan = [
         questionary.Choice(title=label, value=nilai)
         for label, nilai in daftar_pilihan
     ]
 
-    # Fungsi dalam untuk menampilkan pertanyaan, dengan pilihan awal sesuai yang diberikan.
     def tanya(awal):
         return questionary.select(
             pertanyaan,
@@ -160,16 +196,18 @@ def pilih_opsi(pertanyaan, daftar_pilihan, default=None):
 
     try:
         return tanya(default)
-    # Jika pilihan awal tidak ditemukan, ulangi pertanyaan tanpa pilihan awal.
     except ValueError:
         return tanya(None)
 
-# Menampilkan pertanyaan konfirmasi dengan pilihan Ya atau Tidak.
+
+# Meminta pengguna menentukan pilihan Ya atau Tidak dan mengembalikan hasilnya.
 def konfirmasi(pertanyaan):
     hasil = pilih_opsi(pertanyaan, [("Tidak", False), ("Ya", True)])
     return hasil is True
 
-# Menampilkan judul menu beserta daftar pilihannya, lalu mengembalikan kode menu yang dipilih pengguna.
+
+# Menampilkan menu lengkap dengan keterangan setiap pilihan
+# serta menyediakan pilihan tambahan untuk kembali atau keluar.
 def pilih_menu(judul, opsi, label_nol):
     tampilkan_judul(judul)
 

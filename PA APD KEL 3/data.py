@@ -1,20 +1,20 @@
-# Mengimpor date untuk menyimpan tanggal vaksinasi.
+# Mengimpor date untuk menyimpan tanggal vaksinasi dalam format tanggal.
 from datetime import date
 
-# Menentukan batas minimal dan maksimal panjang nama.
+# Menentukan batas minimal dan maksimal jumlah karakter nama.
 NAMA_MIN = 3
 NAMA_MAKS = 50
-# Menentukan batas panjang nama vaksin.
+# Menentukan batas panjang nama vaksin yang diperbolehkan.
 VAKSIN_MIN = 2
 VAKSIN_MAKS = 30
-# Menentukan batas maksimal dosis dan interval vaksin.
+# Menentukan batas maksimal dosis vaksin dan jarak waktu antarvaksin.
 DOSIS_VAKSIN_MAKS = 5
 INTERVAL_MAKS = 365
 
-# Menyimpan pilihan status vaksinasi yang tersedia.
+# Menyimpan pilihan status vaksinasi yang dapat digunakan dalam program.
 daftar_status = ["Sudah Vaksin", "Belum Vaksin", "Ditunda"]
 
-# Menyimpan informasi batas dosis dan jarak waktu setiap jenis vaksin.
+# Menyimpan batas jumlah dosis dan jarak waktu untuk setiap jenis vaksin.
 jadwal_vaksin = {
     "Covid-19": {"maks": 3, "interval": 28},
     "Tetanus": {"maks": 3, "interval": 30},
@@ -22,11 +22,11 @@ jadwal_vaksin = {
     "Influenza": {"maks": 1, "interval": 0},
 }
 
-# Membuat daftar nama vaksin berdasarkan data jadwal vaksin.
+# Membuat daftar jenis vaksin dari data jadwal yang sudah tersedia.
 daftar_vaksin = list(jadwal_vaksin)
 
 
-# Menyimpan informasi akun pengguna, termasuk password, peran, nama, dan umur.
+# Menyimpan informasi akun pengguna berupa username, password, peran, nama, dan umur.
 data_user = {
     "rendy": {"password": "rendy123", "role": "admin", "nama": "Rendy", "umur": 20},
     "afif": {"password": "afif123", "role": "user", "nama": "Muhammad Afif Mumtaz", "umur": 19},
@@ -36,7 +36,7 @@ data_user = {
 }
 
 
-# Menyimpan data vaksinasi, seperti identitas penerima, jenis vaksin, dosis, status, dan tanggal.
+# Menyimpan catatan vaksinasi yang berisi akun, nama, umur, jenis vaksin, dosis, status, dan tanggal.
 data_vaksin = {
     1: {"akun": "abbie", "nama": "Abbie Mujahiddin Asmuransyah", "umur": 19,
         "vaksin": "Covid-19", "dosis": 1, "status": "Sudah Vaksin", "tanggal": date(2026, 10, 10)},
@@ -51,7 +51,7 @@ data_vaksin = {
 }
 
 
-# Menyimpan informasi pengguna yang sedang login dan status jalannya program.
+# Menyimpan informasi akun yang sedang digunakan dan menentukan apakah program masih berjalan.
 sesi = {
     "user_aktif": None,
     "program_berjalan": True,
